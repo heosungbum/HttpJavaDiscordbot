@@ -1,6 +1,7 @@
 package kr.co.intteam.discord.botLib;
 
 import com.google.gson.Gson;
+import kr.co.intteam.discord.botLib.resources.Channel;
 import kr.co.intteam.discord.botLib.resources.DiscordMessage;
 import kr.co.intteam.discord.botLib.resources.Guild;
 
@@ -101,8 +102,6 @@ public class BotConnect {
                     result.append(line);
                 }
                 br.close();
-
-                System.out.println(result.toString());
                 Gson g = new Gson();
                 DiscordMessage[] a = g.fromJson(result.toString(), DiscordMessage[].class);
                 return a;
@@ -132,8 +131,6 @@ public class BotConnect {
                     result.append(line);
                 }
                 br.close();
-
-                System.out.println(result.toString());
                 Gson g = new Gson();
                 Guild[] a = g.fromJson(result.toString(), Guild[].class);
                 return a;
@@ -144,9 +141,9 @@ public class BotConnect {
         return null;
     }
 
-    public void getInfoChannels(String info){
+    public Channel[] getInfoGuildChannels(String info){
         try{
-            URL url = new URL("https://discord.com/api/"+info);
+            URL url = new URL("https://discord.com/api/guilds/"+info+"/channels");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.addRequestProperty("Authorization","Bot " + token);
@@ -163,11 +160,13 @@ public class BotConnect {
                     result.append(line);
                 }
                 br.close();
-
-                System.out.println(result.toString());
+                Gson g = new Gson();
+                Channel[] a = g.fromJson(result.toString(), Channel[].class);
+                return a;
             }
         } catch (IOException e){
             System.err.println(e.toString());
         }
+        return null;
     }
 }
