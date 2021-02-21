@@ -19,12 +19,4 @@ public class ChatBotConnect extends BotConnect{
     public void setPrefix(String[] prefix) {
         this.prefix = prefix;
     }
-
-    public void getMessage(){
-
-    }
-
-    public void getMessagesChannel(String channel){
-        DiscordMessage[] m = getInfoMessages(channel);
-    }
 }

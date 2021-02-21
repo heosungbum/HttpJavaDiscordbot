@@ -1,9 +1,7 @@
 package kr.co.intteam.discord.botLib;
 
 import com.google.gson.Gson;
-import kr.co.intteam.discord.botLib.resources.Channel;
-import kr.co.intteam.discord.botLib.resources.DiscordMessage;
-import kr.co.intteam.discord.botLib.resources.Guild;
+import kr.co.intteam.discord.botLib.resources.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -81,6 +79,35 @@ public class BotConnect {
         } catch (IOException e){
             System.err.println(e.toString());
         }
+    }
+
+    public DiscordMessage getInfoMessage(String channel, String message) throws Exception{
+        try{
+            URL url = new URL("https://discord.com/api/channels/"+channel+"/messages/"+message);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.addRequestProperty("Authorization","Bot " + token);
+            con.addRequestProperty("Accept", "application/json");
+            int code=con.getResponseCode();
+            System.out.println(code);
+            System.out.println(con.getResponseMessage());
+            if(code==200){
+                //System.out.print(con.getRequestProperties().toString());
+                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String line;
+                StringBuffer result = new StringBuffer();
+                while((line=br.readLine())!=null){
+                    result.append(line);
+                }
+                br.close();
+                Gson g = new Gson();
+                DiscordMessage a = g.fromJson(result.toString(), DiscordMessage.class);
+                return a;
+            }
+        } catch (IOException e){
+            System.err.println(e.toString());
+        }
+        return null;
     }
 
     public DiscordMessage[] getInfoMessages(String info){
@@ -169,4 +196,32 @@ public class BotConnect {
         }
         return null;
     }
+    /*public GuildMember[] getInfoGuildUsers(String info){
+        try{
+            URL url = new URL("https://discord.com/api/guilds/"+info+"/members");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.addRequestProperty("Authorization","Bot " + token);
+            con.addRequestProperty("Accept", "application/json");
+            int code=con.getResponseCode();
+            System.out.println(code);
+            System.out.println(con.getResponseMessage());
+            if(code==200){
+                //System.out.print(con.getRequestProperties().toString());
+                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String line;
+                StringBuffer result = new StringBuffer();
+                while((line=br.readLine())!=null){
+                    result.append(line);
+                }
+                br.close();
+                Gson g = new Gson();
+                GuildMember[] a = g.fromJson(result.toString(), GuildMember[].class);
+                return a;
+            }
+        } catch (IOException e){
+            System.err.println(e.toString());
+        }
+        return null;
+    }*/
 }

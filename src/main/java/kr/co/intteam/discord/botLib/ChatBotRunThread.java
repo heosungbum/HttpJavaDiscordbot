@@ -1,8 +1,6 @@
 package kr.co.intteam.discord.botLib;
 
-import kr.co.intteam.discord.botLib.resources.Channel;
-import kr.co.intteam.discord.botLib.resources.DiscordMessage;
-import kr.co.intteam.discord.botLib.resources.Guild;
+import kr.co.intteam.discord.botLib.resources.*;
 
 public class ChatBotRunThread extends Thread{
     private String token;
@@ -24,6 +22,22 @@ public class ChatBotRunThread extends Thread{
         }
     }
 
+    public void getLastMessage(){
+        for(int i=0;i<guilds.length;i++){
+            for(int j=0; j<channels[i].length; j++){
+                if(channels[i][j].last_message_id == null){
+                    continue;
+                }
+                System.out.println("\r\n"+channels[i][j].name);
+                try {
+                    System.out.println(con.getInfoMessage(channels[i][j].id, channels[i][j].last_message_id).content);
+                } catch(Exception e){
+                    System.out.println(e.toString());
+                }
+            }
+        }
+    }
+
     public ChatBotRunThread(String token, String[] prefix){
         this.token = token;
         this.prefix = prefix;
@@ -33,5 +47,9 @@ public class ChatBotRunThread extends Thread{
         con = new ChatBotConnect(token, prefix);
 
         getGuildsAndChannels();
+
+        getLastMessage();
+
+
     }
 }
