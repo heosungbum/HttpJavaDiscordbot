@@ -30,7 +30,11 @@ public class ChatBotRunThread extends Thread{
                 }
                 System.out.println("\r\n"+channels[i][j].name);
                 try {
-                    System.out.println(con.getInfoMessage(channels[i][j].id, channels[i][j].last_message_id).content);
+                    DiscordMessage conMessage = con.getInfoMessage(channels[i][j].id, channels[i][j].last_message_id);
+                    if(conMessage!=null)System.out.println(conMessage.content);
+                    else{
+                        System.out.println("It is null");
+                    }
                 } catch(Exception e){
                     System.out.println(e.toString());
                 }
@@ -49,7 +53,5 @@ public class ChatBotRunThread extends Thread{
         getGuildsAndChannels();
 
         getLastMessage();
-
-
     }
 }
