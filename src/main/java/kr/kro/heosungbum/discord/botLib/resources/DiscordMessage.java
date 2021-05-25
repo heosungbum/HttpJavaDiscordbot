@@ -1,4 +1,4 @@
-package kr.co.intteam.discord.botLib.resources;
+package kr.kro.heosungbum.discord.botLib.resources;
 
 public class DiscordMessage {
     public String id;

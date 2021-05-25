@@ -1,7 +1,5 @@
-import kr.co.intteam.discord.botLib.ChatBotConnect;
-import kr.co.intteam.discord.botLib.ChatBotRunThread;
-import kr.co.intteam.discord.botLib.resources.Channel;
-import kr.co.intteam.discord.botLib.resources.Guild;
+import kr.kro.heosungbum.discord.botLib.ChatBotRunThread;
+import kr.kro.heosungbum.discord.botLib.resources.Channel;
 
 import java.io.IOException;
 import java.util.Scanner;

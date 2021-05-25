@@ -1,7 +1,7 @@
-package kr.co.intteam.discord.botLib;
+package kr.kro.heosungbum.discord.botLib;
 
 import com.google.gson.Gson;
-import kr.co.intteam.discord.botLib.resources.*;
+import kr.kro.heosungbum.discord.botLib.resources.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

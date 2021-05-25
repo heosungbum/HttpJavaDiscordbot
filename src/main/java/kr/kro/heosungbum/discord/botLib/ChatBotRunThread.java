@@ -1,6 +1,6 @@
-package kr.co.intteam.discord.botLib;
+package kr.kro.heosungbum.discord.botLib;
 
-import kr.co.intteam.discord.botLib.resources.*;
+import kr.kro.heosungbum.discord.botLib.resources.*;
 
 public class ChatBotRunThread extends Thread{
     private String token;
@@ -22,7 +22,7 @@ public class ChatBotRunThread extends Thread{
         }
     }
 
-    public void findCommand(){
+    public void findCommandMessage(){
         for(int i=0;i<guilds.length;i++){
             for(int j=0; j<channels[i].length; j++){
                 if(channels[i][j].last_message_id == null){
@@ -35,6 +35,7 @@ public class ChatBotRunThread extends Thread{
                         for(int k=0; k<prefix.length; k++){
                             if(arr[0].equals(prefix[k])){
                                 System.out.println(arr[1]);
+                                command(arr[1],conMessage);
                             }
                         }
                     }
@@ -77,7 +78,13 @@ public class ChatBotRunThread extends Thread{
         con = new ChatBotConnect(token, prefix);
 
         getGuildsAndChannels();
-        findCommand();
+        findCommandMessage();
         // getLastMessageGuild();
+    }
+
+    public void command(String message, DiscordMessage conMessage){
+        if(message.equals("ping")){
+            con.sendMessage(conMessage.author+"pong",conMessage.channel_id);
+        }
     }
 }

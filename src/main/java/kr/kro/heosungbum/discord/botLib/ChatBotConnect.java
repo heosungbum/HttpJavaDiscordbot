@@ -1,6 +1,4 @@
-package kr.co.intteam.discord.botLib;
-
-import kr.co.intteam.discord.botLib.resources.DiscordMessage;
+package kr.kro.heosungbum.discord.botLib;
 
 public class ChatBotConnect extends BotConnect{
     private String token;
