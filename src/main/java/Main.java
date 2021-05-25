@@ -4,11 +4,13 @@ import kr.co.intteam.discord.botLib.resources.Channel;
 import kr.co.intteam.discord.botLib.resources.Guild;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String args[]){
         Channel c = new Channel();
-        test("");
+        Scanner scanner = new Scanner(System.in);
+        test(scanner.nextLine());
     }
 
     private static void test(String token){
