@@ -22,13 +22,39 @@ public class ChatBotRunThread extends Thread{
         }
     }
 
-    public void getLastMessage(){
+    public void findCommand(){
         for(int i=0;i<guilds.length;i++){
             for(int j=0; j<channels[i].length; j++){
                 if(channels[i][j].last_message_id == null){
                     continue;
                 }
-                System.out.println("\r\n"+channels[i][j].name);
+                try {
+                    DiscordMessage conMessage = con.getInfoMessage(channels[i][j].id, channels[i][j].last_message_id);
+                    if(conMessage!=null && !conMessage.author.bot){
+                        String[] arr = conMessage.content.split(" ");
+                        for(int k=0; k<prefix.length; k++){
+                            if(arr[0].equals(prefix[k])){
+                                System.out.println(arr[1]);
+                            }
+                        }
+                    }
+                    else{
+                        System.out.println("It is null message or bot's message.");
+                    }
+                } catch(Exception e){
+                    System.out.println(e.toString());
+                }
+            }
+        }
+    }
+
+    public void getLastMessageGuild(){
+        for(int i=0;i<guilds.length;i++){
+            for(int j=0; j<channels[i].length; j++){
+                if(channels[i][j].last_message_id == null){
+                    continue;
+                }
+                System.out.println("\n"+channels[i][j].name);
                 try {
                     DiscordMessage conMessage = con.getInfoMessage(channels[i][j].id, channels[i][j].last_message_id);
                     if(conMessage!=null)System.out.println(conMessage.content);
@@ -51,7 +77,7 @@ public class ChatBotRunThread extends Thread{
         con = new ChatBotConnect(token, prefix);
 
         getGuildsAndChannels();
-
-        getLastMessage();
+        findCommand();
+        // getLastMessageGuild();
     }
 }
